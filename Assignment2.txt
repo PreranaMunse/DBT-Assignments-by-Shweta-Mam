@@ -1,0 +1,361 @@
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| cdac               |
+| company            |
+| information_schema |
+| librarydb          |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> USE CDAC;
+Database changed
+mysql> SHOW TABLES;
++----------------+
+| Tables_in_cdac |
++----------------+
+| employee       |
+| student        |
++----------------+
+2 rows in set (0.00 sec)
+
+mysql> DESC EMPLOYEE;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int         | YES  |     | NULL    |       |
+| name   | varchar(30) | YES  |     | NULL    |       |
+| salary | int         | YES  |     | NULL    |       |
+| age    | int         | YES  |     | NULL    |       |
+| city   | varchar(30) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Department(depart_id INT PRIMARY KEY,depart_name VARCHAR(30)NOT NULL);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO Department(depart_id, depart_name)
+    -> VALUES
+    -> (101, 'IT'),
+    -> (102, 'HR'),
+    -> (103, 'Sales'),
+    -> (104, 'Finance'),
+    -> (105, 'Marketing');
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM DEPARTMENT;
++-----------+-------------+
+| depart_id | depart_name |
++-----------+-------------+
+|       101 | IT          |
+|       102 | HR          |
+|       103 | Sales       |
+|       104 | Finance     |
+|       105 | Marketing   |
++-----------+-------------+
+5 rows in set (0.00 sec)
+mysql> INSERT INTO EMPLOYEE
+    -> (emp_id, emp_name, Salary, City, Joining_Date, depart_id)
+    -> VALUES
+    -> (101, 'Rahul', 60000, 'Pune', '2024-10-10', 101),
+    -> (102, 'Anjali', 75000, 'Mumbai', '2022-09-24', 102),
+    -> (103, 'Tina', 65000, 'Nagpur', '2020-12-03', 103),
+    -> (104, 'Sneha', 90000, 'Nagpur', '2021-08-05', 101),
+    -> (105, 'Rohan', 50000, 'Pune', '2023-11-12', 102),
+    -> (106, 'Neha', 75000, 'Mumbai', '2022-09-18', 105);
+Query OK, 6 rows affected (0.00 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYEE;
++--------+----------+--------+--------+--------------+-----------+
+| emp_id | emp_name | Salary | City   | Joining_Date | depart_id |
++--------+----------+--------+--------+--------------+-----------+
+|    101 | Rahul    |  60000 | Pune   | 2024-10-10   |       101 |
+|    102 | Anjali   |  75000 | Mumbai | 2022-09-24   |       102 |
+|    103 | Tina     |  65000 | Nagpur | 2020-12-03   |       103 |
+|    104 | Sneha    |  90000 | Nagpur | 2021-08-05   |       101 |
+|    105 | Rohan    |  50000 | Pune   | 2023-11-12   |       102 |
+|    106 | Neha     |  75000 | Mumbai | 2022-09-18   |       105 |
++--------+----------+--------+--------+--------------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEE ADD Email VARCHAR(100);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC EMPLOYEE;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| emp_id       | int          | NO   | PRI | NULL    |       |
+| emp_name     | varchar(50)  | NO   |     | NULL    |       |
+| Salary       | int          | YES  |     | NULL    |       |
+| City         | varchar(50)  | YES  |     | NULL    |       |
+| Joining_Date | date         | YES  |     | NULL    |       |
+| depart_id    | int          | YES  | MUL | NULL    |       |
+| Email        | varchar(100) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+mysql> INSERT INTO EMPLOYEE
+    -> (emp_id, emp_name, Salary, City, Joining_Date, depart_id, Email)
+    -> VALUES
+    -> (107, 'Karan', 55000, 'Mumbai', '2023-04-15', 101, 'karan@gmail.com'),
+    -> (108, 'Pooja', 48000, 'Pune', '2024-01-20', 102, 'pooja@gmail.com'),
+    -> (109, 'Arjun', 82000, 'Nagpur', '2022-07-11', 103, 'arjun@gmail.com'),
+    -> (110, 'Meera', 62000, 'Mumbai', '2023-09-05', 104, 'meera@gmail.com'),
+    -> (111, 'Vikas', 70000, 'Pune', '2021-05-25', 105, 'vikas@gmail.com');
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYEE;
++--------+----------+--------+--------+--------------+-----------+-----------------+
+| emp_id | emp_name | Salary | City   | Joining_Date | depart_id | Email           |
++--------+----------+--------+--------+--------------+-----------+-----------------+
+|    101 | Rahul    |  60000 | Pune   | 2024-10-10   |       101 | NULL            |
+|    102 | Anjali   |  75000 | Mumbai | 2022-09-24   |       102 | NULL            |
+|    103 | Tina     |  65000 | Nagpur | 2020-12-03   |       103 | NULL            |
+|    104 | Sneha    |  90000 | Nagpur | 2021-08-05   |       101 | NULL            |
+|    105 | Rohan    |  50000 | Pune   | 2023-11-12   |       102 | NULL            |
+|    106 | Neha     |  75000 | Mumbai | 2022-09-18   |       105 | NULL            |
+|    107 | Karan    |  55000 | Mumbai | 2023-04-15   |       101 | karan@gmail.com |
+|    108 | Pooja    |  48000 | Pune   | 2024-01-20   |       102 | pooja@gmail.com |
+|    109 | Arjun    |  82000 | Nagpur | 2022-07-11   |       103 | arjun@gmail.com |
+|    110 | Meera    |  62000 | Mumbai | 2023-09-05   |       104 | meera@gmail.com |
+|    111 | Vikas    |  70000 | Pune   | 2021-05-25   |       105 | vikas@gmail.com |
++--------+----------+--------+--------+--------------+-----------+-----------------+
+11 rows in set (0.00 sec)
+mysql> UPDATE EMPLOYEE SET Salary = 55000 WHERE emp_id = 105;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYEE;
++--------+----------+--------+--------+--------------+-----------+-----------------+
+| emp_id | emp_name | Salary | City   | Joining_Date | depart_id | Email           |
++--------+----------+--------+--------+--------------+-----------+-----------------+
+|    101 | Rahul    |  60000 | Pune   | 2024-10-10   |       101 | NULL            |
+|    102 | Anjali   |  75000 | Mumbai | 2022-09-24   |       102 | NULL            |
+|    103 | Tina     |  65000 | Nagpur | 2020-12-03   |       103 | NULL            |
+|    104 | Sneha    |  90000 | Nagpur | 2021-08-05   |       101 | NULL            |
+|    105 | Rohan    |  55000 | Pune   | 2023-11-12   |       102 | NULL            |
+|    106 | Neha     |  75000 | Mumbai | 2022-09-18   |       105 | NULL            |
+|    107 | Karan    |  55000 | Mumbai | 2023-04-15   |       101 | karan@gmail.com |
+|    108 | Pooja    |  48000 | Pune   | 2024-01-20   |       102 | pooja@gmail.com |
+|    109 | Arjun    |  82000 | Nagpur | 2022-07-11   |       103 | arjun@gmail.com |
+|    110 | Meera    |  62000 | Mumbai | 2023-09-05   |       104 | meera@gmail.com |
+|    111 | Vikas    |  70000 | Pune   | 2021-05-25   |       105 | vikas@gmail.com |
++--------+----------+--------+--------+--------------+-----------+-----------------+
+11 rows in set (0.00 sec)
+
+mysql> GRANT SELECT ON cdac.Employee TO 'readonly_user'@'localhost';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SHOW GRANTS FOR 'readonly_user'@'localhost';
++------------------------------------------------------------------+
+| Grants for readonly_user@localhost                               |
++------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `readonly_user`@`localhost`                |
+| GRANT SELECT ON `cdac`.`employee` TO `readonly_user`@`localhost` |
++------------------------------------------------------------------+
+2 rows in set (0.01 sec)
+
+mysql>mysql> CREATE USER 'temp_user'@'localhost'
+    -> IDENTIFIED BY 'TempUser@123';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> GRANT INSERT ON cdac.EMPLOYEE
+    -> TO 'temp_user'@'localhost';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> REVOKE INSERT ON cdac.EMPLOYEE
+    -> FROM 'temp_user'@'localhost';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SHOW GRANTS FOR 'temp_user'@'localhost';
++-----------------------------------------------+
+| Grants for temp_user@localhost                |
++-----------------------------------------------+
+| GRANT USAGE ON *.* TO `temp_user`@`localhost` |
++-----------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql>mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEE(emp_id, emp_name, Salary, City, Joining_Date, depart_id, Email) VALUES (112, 'Sahil', 68000, 'Mumbai', '2025-02-10', 103, 'sahil@gmail.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE WHERE emp_id = 112;
++--------+----------+--------+--------+--------------+-----------+-----------------+
+| emp_id | emp_name | Salary | City   | Joining_Date | depart_id | Email           |
++--------+----------+--------+--------+--------------+-----------+-----------------+
+|    112 | Sahil    |  68000 | Mumbai | 2025-02-10   |       103 | sahil@gmail.com |
++--------+----------+--------+--------+--------------+-----------+-----------------+
+1 row in set (0.00 sec)
+
+
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> UPDATE EMPLOYEE SET Salary = 65000 where emp_id = 101;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> Commit;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT emp_id, emp_name, salary FROM EMPLOYEE WHERE emp_id = 101;
++--------+----------+--------+
+| emp_id | emp_name | salary |
++--------+----------+--------+
+|    101 | Rahul    |  65000 |
++--------+----------+--------+
+1 row in set (0.00 sec)
+mysql> UPDATE EMPLOYEE SET DEPART_ID = 102 WHERE EMP_ID = 101;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT emp_id, emp_name, depart_id FROM EMPLOYEE WHERE emp_id = 101;
++--------+----------+-----------+
+| emp_id | emp_name | depart_id |
++--------+----------+-----------+
+|    101 | Rahul    |       102 |
++--------+----------+-----------+
+1 row in set (0.00 sec)
+mysql> ROLLBACK TO SAVEPOINT before_dept_update;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT emp_id, emp_name, depart_id FROM EMPLOYEE WHERE emp_id =101;
++--------+----------+-----------+
+| emp_id | emp_name | depart_id |
++--------+----------+-----------+
+|    101 | Rahul    |       101 |
++--------+----------+-----------+
+1 row in set (0.00 sec)
+
+mysql> Commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE WHERE Salary > 50000;
++--------+----------+--------+--------+--------------+-----------+-----------------+
+| emp_id | emp_name | Salary | City   | Joining_Date | depart_id | Email           |
++--------+----------+--------+--------+--------------+-----------+-----------------+
+|    101 | Rahul    |  65000 | Pune   | 2024-10-10   |       101 | NULL            |
+|    102 | Anjali   |  75000 | Mumbai | 2022-09-24   |       102 | NULL            |
+|    103 | Tina     |  65000 | Nagpur | 2020-12-03   |       103 | NULL            |
+|    104 | Sneha    |  90000 | Nagpur | 2021-08-05   |       101 | NULL            |
+|    105 | Rohan    |  55000 | Pune   | 2023-11-12   |       102 | NULL            |
+|    106 | Neha     |  75000 | Mumbai | 2022-09-18   |       105 | NULL            |
+|    107 | Karan    |  55000 | Mumbai | 2023-04-15   |       101 | karan@gmail.com |
+|    109 | Arjun    |  82000 | Nagpur | 2022-07-11   |       103 | arjun@gmail.com |
+|    110 | Meera    |  62000 | Mumbai | 2023-09-05   |       104 | meera@gmail.com |
+|    111 | Vikas    |  70000 | Pune   | 2021-05-25   |       105 | vikas@gmail.com |
+|    112 | Sahil    |  68000 | Mumbai | 2025-02-10   |       103 | sahil@gmail.com |
++--------+----------+--------+--------+--------------+-----------+-----------------+
+11 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEE SET SALARY = SALARY * 1.10 WHERE depart_id = 101;
+Query OK, 3 rows affected (0.00 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> SELECT emp_id, emp_name, Salary, depart_id
+    -> FROM EMPLOYEE
+    -> WHERE depart_id = 101;
++--------+----------+--------+-----------+
+| emp_id | emp_name | Salary | depart_id |
++--------+----------+--------+-----------+
+|    101 | Rahul    |  71500 |       101 |
+|    104 | Sneha    |  99000 |       101 |
+|    107 | Karan    |  60500 |       101 |
++--------+----------+--------+-----------+
+3 rows in set (0.00 sec)
+mysql> SELECT depart_id, COUNT(*) AS total_employees
+    -> FROM EMPLOYEE
+    -> GROUP BY depart_id;
++-----------+-----------------+
+| depart_id | total_employees |
++-----------+-----------------+
+|       101 |               3 |
+|       102 |               3 |
+|       103 |               3 |
+|       104 |               1 |
+|       105 |               2 |
++-----------+-----------------+
+5 rows in set (0.02 sec)
+mysql> CREATE VIEW Mumbai_Salespeople AS
+    -> SELECT e.emp_id, e.emp_name, e.Salary, e.City, d.depart_name
+    -> FROM EMPLOYEE e
+    -> JOIN Department d
+    -> ON e.depart_id = d.depart_id
+    -> WHERE d.depart_name = 'Sales'
+    -> AND e.City = 'Mumbai';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SELECT * FROM Mumbai_Salespeople;
++--------+----------+--------+--------+-------------+
+| emp_id | emp_name | Salary | City   | depart_name |
++--------+----------+--------+--------+-------------+
+|    112 | Sahil    |  68000 | Mumbai | Sales       |
++--------+----------+--------+--------+-------------+
+mysql> SELECT MAX(Salary) AS highest_salary
+    -> FROM EMPLOYEE;
++----------------+
+| highest_salary |
++----------------+
+|          99000 |
++----------------+
+1 row in set (0.00 sec)
+mysql> SELECT MAX(Salary) AS second_highest_salary
+    -> FROM EMPLOYEE
+    -> WHERE Salary < (
+    ->     SELECT MAX(Salary)
+    ->     FROM EMPLOYEE
+    -> );
++-----------------------+
+| second_highest_salary |
++-----------------------+
+|                 82000 |
++-----------------------+
+1 row in set (0.00 sec)
+mysql> SELECT *
+    -> FROM EMPLOYEE
+    -> ORDER BY Joining_Date DESC;
++--------+----------+--------+--------+--------------+-----------+-----------------+
+| emp_id | emp_name | Salary | City   | Joining_Date | depart_id | Email           |
++--------+----------+--------+--------+--------------+-----------+-----------------+
+|    112 | Sahil    |  68000 | Mumbai | 2025-02-10   |       103 | sahil@gmail.com |
+|    101 | Rahul    |  71500 | Pune   | 2024-10-10   |       101 | NULL            |
+|    108 | Pooja    |  48000 | Pune   | 2024-01-20   |       102 | pooja@gmail.com |
+|    105 | Rohan    |  55000 | Pune   | 2023-11-12   |       102 | NULL            |
+|    110 | Meera    |  62000 | Mumbai | 2023-09-05   |       104 | meera@gmail.com |
+|    107 | Karan    |  60500 | Mumbai | 2023-04-15   |       101 | karan@gmail.com |
+|    102 | Anjali   |  75000 | Mumbai | 2022-09-24   |       102 | NULL            |
+|    106 | Neha     |  75000 | Mumbai | 2022-09-18   |       105 | NULL            |
+|    109 | Arjun    |  82000 | Nagpur | 2022-07-11   |       103 | arjun@gmail.com |
+|    104 | Sneha    |  99000 | Nagpur | 2021-08-05   |       101 | NULL            |
+|    111 | Vikas    |  70000 | Pune   | 2021-05-25   |       105 | vikas@gmail.com |
+|    103 | Tina     |  65000 | Nagpur | 2020-12-03   |       103 | NULL            |
++--------+----------+--------+--------+--------------+-----------+-----------------+
+12 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Department
+    -> RENAME COLUMN depart_name TO DepartmentName;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc department;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| depart_id      | int         | NO   | PRI | NULL    |       |
+| DepartmentName | varchar(30) | NO   |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
