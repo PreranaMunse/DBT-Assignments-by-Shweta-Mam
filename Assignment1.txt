@@ -1,0 +1,186 @@
+mysql> CREATE DATABASE LibraryDB;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> SELECT DATABASE LibraryDB;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'LibraryDB' at line 1
+mysql> USE LIBRARYDB;
+Database changed
+mysql> SELECT DATABASE();
++------------+
+| DATABASE() |
++------------+
+| librarydb  |
++------------+
+1 row in set (0.00 sec)
+
+mysql> CREATE TABLE Author(author_id INT PRIMARY KEY,
+    -> name VARCHAR(100),
+    -> Country VARCHAR(50);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> CREATE TABLE Author(author_id INT PRIMARY KEY,
+    -> name VARCHAR(100),
+    -> Country VARCHAR(50));
+Query OK, 0 rows affected (0.04 sec)
+mysql> RENAME TABLE Author TO Authors;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc Authors;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| author_id | int          | NO   | PRI | NULL    |       |
+| name      | varchar(100) | YES  |     | NULL    |       |
+| Country   | varchar(50)  | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql>mysql> CREATE TABLE BOOKS (
+    ->     book_id INT PRIMARY KEY,
+    ->     title VARCHAR(150),
+    ->     author_id INT,
+    ->     published_year YEAR,
+    ->     available_copies INT,
+    ->     FOREIGN KEY (author_id) REFERENCES AUTHORS(author_id)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DESC BOOKS;
++------------------+--------------+------+-----+---------+-------+
+| Field            | Type         | Null | Key | Default | Extra |
++------------------+--------------+------+-----+---------+-------+
+| book_id          | int          | NO   | PRI | NULL    |       |
+| title            | varchar(150) | YES  |     | NULL    |       |
+| author_id        | int          | YES  | MUL | NULL    |       |
+| published_year   | year         | YES  |     | NULL    |       |
+| available_copies | int          | YES  |     | NULL    |       |
++------------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE TABLE BORROW_RECORDS (
+    ->     record_id INT PRIMARY KEY,
+    ->     member_id INT,
+    ->     book_id INT,
+    ->     borrow_date DATE,
+    ->     return_date DATE,
+    ->     FOREIGN KEY (member_id) REFERENCES MEMBERS(member_id),
+    ->     FOREIGN KEY (book_id) REFERENCES BOOKS(book_id)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> DESC BORROW_RECORDS;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| record_id   | int  | NO   | PRI | NULL    |       |
+| member_id   | int  | YES  | MUL | NULL    |       |
+| book_id     | int  | YES  | MUL | NULL    |       |
+| borrow_date | date | YES  |     | NULL    |       |
+| return_date | date | YES  |     | NULL    |       |
++-------------+------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql>mysql> ALTER TABLE BOOKS
+    -> ADD COLUMN GENRE VARCHAR(50);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC BOOKS;
++------------------+--------------+------+-----+---------+-------+
+| Field            | Type         | Null | Key | Default | Extra |
++------------------+--------------+------+-----+---------+-------+
+| book_id          | int          | NO   | PRI | NULL    |       |
+| title            | varchar(150) | YES  |     | NULL    |       |
+| author_id        | int          | YES  | MUL | NULL    |       |
+| published_year   | year         | YES  |     | NULL    |       |
+| available_copies | int          | YES  |     | NULL    |       |
+| GENRE            | varchar(50)  | YES  |     | NULL    |       |
++------------------+--------------+------+-----+---------+-------+
+mysql> INSERT INTO Authors (author_id, name, Country)
+    -> VALUES
+    -> (1, 'Amitav Ghosh', 'India'),
+    -> (2, 'Leo Tolstoy', 'Russia'),
+    -> (3, 'Jane Austen', 'England');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM AUTHORS;
++-----------+--------------+---------+
+| author_id | name         | Country |
++-----------+--------------+---------+
+|         1 | Amitav Ghosh | India   |
+|         2 | Leo Tolstoy  | Russia  |
+|         3 | Jane Austen  | England |
++-----------+--------------+---------+
+3 rows in set (0.00 sec)
+mysql> INSERT INTO Books
+    -> (book_id, title, author_id, published_year, available_copies, genre)
+    -> VALUES
+    -> (1, 'The Glass Palace', 1, 2000, 5, 'Historical Fiction'),
+    -> (2, 'War and Peace', 2, 1901, 3, 'Historical Fiction'),
+    -> (3, 'Pride and Prejudice', 3, 1901, 4, 'Romance'),
+    -> (4, 'The Hungry Tide', 1, 2004, 6, 'Fiction'),
+    -> (5, 'Animal Farm', 3, 1945, 2, 'Satire');
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM BOOKS;
++---------+---------------------+-----------+----------------+------------------+--------------------+
+| book_id | title               | author_id | published_year | available_copies | GENRE              |
++---------+---------------------+-----------+----------------+------------------+--------------------+
+|       1 | The Glass Palace    |         1 |           2000 |                5 | Historical Fiction |
+|       2 | War and Peace       |         2 |           1901 |                3 | Historical Fiction |
+|       3 | Pride and Prejudice |         3 |           1901 |                4 | Romance            |
+|       4 | The Hungry Tide     |         1 |           2004 |                6 | Fiction            |
+|       5 | Animal Farm         |         3 |           1945 |                2 | Satire             |
++---------+---------------------+-----------+----------------+------------------+--------------------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO MEMBERS(member_id, name, email, phone)
+    -> VALUES
+    -> (1,'Prerana', 'prerana@gmail.com', '9876543201'),
+    -> (2,'Bhakti', 'bhakti@gmail.com','9876543202'),
+    -> (3,'Samruddhi', 'samruddhi@gmail.com', '9876543203');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM MEMBERS;
++-----------+-----------+---------------------+------------+
+| member_id | name      | email               | phone      |
++-----------+-----------+---------------------+------------+
+|         1 | Prerana   | prerana@gmail.com   | 9876543201 |
+|         2 | Bhakti    | bhakti@gmail.com    | 9876543202 |
+|         3 | Samruddhi | samruddhi@gmail.com | 9876543203 |
++-----------+-----------+---------------------+------------+
+3 rows in set (0.00 sec)
+mysql> desc borrow_records;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| record_id   | int  | NO   | PRI | NULL    |       |
+| member_id   | int  | YES  | MUL | NULL    |       |
+| book_id     | int  | YES  | MUL | NULL    |       |
+| borrow_date | date | YES  |     | NULL    |       |
+| return_date | date | YES  |     | NULL    |       |
++-------------+------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO BORROW_RECORDS(record_id, member_id, book_id, borrow_date, return_date)
+    -> VALUES
+    -> (1, 1, 1, '2026-09-01', '2026-09-10'),
+    -> (2, 2, 3, '2026-09-05', '2026-09-15'),
+    -> (3, 3, 2, '2026-09-10', NULL),
+    -> (4, 1, 5, '2026-09-12', NULL);
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM BORROW_RECORDS;
++-----------+-----------+---------+-------------+-------------+
+| record_id | member_id | book_id | borrow_date | return_date |
++-----------+-----------+---------+-------------+-------------+
+|         1 |         1 |       1 | 2026-09-01  | 2026-09-10  |
+|         2 |         2 |       3 | 2026-09-05  | 2026-09-15  |
+|         3 |         3 |       2 | 2026-09-10  | NULL        |
+|         4 |         1 |       5 | 2026-09-12  | NULL        |
++-----------+-----------+---------+-------------+-------------+
+4 rows in set (0.00 sec)
+
