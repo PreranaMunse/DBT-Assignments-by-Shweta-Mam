@@ -1,0 +1,260 @@
+mysql> SELECT SUM(SALARY) FROM EMPLOYEES;
++-------------+
+| SUM(SALARY) |
++-------------+
+|   603000.00 |
++-------------+
+1 row in set (0.02 sec)
+
+mysql> SELECT Department_id, AVG(SALARY) FROM EMPLOYEES GROUP BY DEPARTMENT_ID;
++---------------+--------------+
+| Department_id | AVG(SALARY)  |
++---------------+--------------+
+|             1 | 68333.333333 |
+|             2 | 61000.000000 |
+|             3 | 72500.000000 |
+|             4 | 40000.000000 |
+|             5 | 30000.000000 |
++---------------+--------------+
+5 rows in set (0.00 sec)
+
+ mysql> SELECT DEPARTMENT_ID, COUNT(*) FROM EMPLOYEES GROUP BY DEPARTMENT_ID;
++---------------+----------+
+| DEPARTMENT_ID | COUNT(*) |
++---------------+----------+
+|             1 |        3 |
+|             2 |        3 |
+|             3 |        2 |
+|             4 |        1 |
+|             5 |        1 |
++---------------+----------+
+5 rows in set (0.01 sec)
+
+
+
+mysql> SELECT DEPARTMENT_ID, COUNT(*) FROM EMPLOYEES GROUP BY DEPARTMENT_ID HAVING COUNT(*) > 5;
+Empty set (0.00 sec)
+
+
+mysql> SELECT * FROM DEPARTMENTS;
++---------------+-----------------+----------+
+| department_id | department_name | LOCATION |
++---------------+-----------------+----------+
+|             1 | IT              | PUNE     |
+|             2 | HR              | MUMBAI   |
+|             3 | Sales           | NASHIK   |
+|             4 | Finance         | NAGPUR   |
+|             5 | Marketing       | THANE    |
++---------------+-----------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT LOCATION FROM DEPARTMENTS;
++----------+
+| LOCATION |
++----------+
+| PUNE     |
+| MUMBAI   |
+| NASHIK   |
+| NAGPUR   |
+| THANE    |
++----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT DEPARTMENT_ID, MAX(SALARY) FROM EMPLOYEES;
++---------------+-------------+
+| DEPARTMENT_ID | MAX(SALARY) |
++---------------+-------------+
+|             1 |    90000.00 |
++---------------+-------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT COUNT(*) FROM EMPLOYEES;
++----------+
+| COUNT(*) |
++----------+
+|       10 |
++----------+
+1 row in set (0.00 sec)
+
+
+
+mysql> SELECT * FROM EMPLOYEES WHERE FIRST_NAME LIKE 'A%';
++-------------+------------+-----------+-----------------------------+------------+----------+---------------+
+| employee_id | first_name | last_name | email                       | hire_date  | salary   | department_id |
++-------------+------------+-----------+-----------------------------+------------+----------+---------------+
+|         104 | Anil       | Patil     | anil.patil@specialforce.com | 2018-09-18 | 70000.00 |             3 |
++-------------+------------+-----------+-----------------------------+------------+----------+---------------+
+1 row in set (0.01 sec)
+
+
+
+mysql> SELECT * FROM EMPLOYEES WHERE FIRST_NAME LIKE '%N';
++-------------+------------+-----------+------------------------------+------------+----------+---------------+
+| employee_id | first_name | last_name | email                        | hire_date  | salary   | department_id |
++-------------+------------+-----------+------------------------------+------------+----------+---------------+
+|         107 | Jatin      | Reddy     | jatin.reddy@specialforce.com | 2021-12-12 | 85000.00 |             2 |
++-------------+------------+-----------+------------------------------+------------+----------+---------------+
+1 row in set (0.00 sec)
+
+
+mysql> SELECT * FROM EMPLOYEES WHERE FIRST_NAME LIKE '%RA%';
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+| employee_id | first_name | last_name | email                         | hire_date  | salary   | department_id |
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+|         101 | Ravi       | Sharma    | ravi.sharma@specialforce.com  | 2017-05-15 | 55000.00 |             1 |
+|         109 | Rajesh     | Gupta     | rajesh.gupta@specialforce.com | 2020-08-11 | 90000.00 |             1 |
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+2 rows in set (0.00 sec)
+
+
+mysql> SELECT * FROM EMPLOYEES ORDER BY SALARY DESC;
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+| employee_id | first_name | last_name | email                         | hire_date  | salary   | department_id |
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+|         109 | Rajesh     | Gupta     | rajesh.gupta@specialforce.com | 2020-08-11 | 90000.00 |             1 |
+|         107 | Jatin      | Reddy     | jatin.reddy@specialforce.com  | 2021-12-12 | 85000.00 |             2 |
+|         106 | Sanjay     | Iyer      | Sanjay.iyer@specialforce.com  | 2018-01-22 | 75000.00 |             3 |
+|         104 | Anil       | Patil     | anil.patil@specialforce.com   | 2018-09-18 | 70000.00 |             3 |
+|         103 | Jyoti      | Verma     | jyoti.verma@specialforce.com  | 2020-11-02 | 60000.00 |             1 |
+|         101 | Ravi       | Sharma    | ravi.sharma@specialforce.com  | 2017-05-15 | 55000.00 |             1 |
+|         110 | Kavita     | Nair      | Kavita.nair@specialforce.com  | 2021-02-07 | 50000.00 |             2 |
+|         102 | Neha       | Kapoor    | neha.kapoor@specialforce.com  | 2019-03-23 | 48000.00 |             2 |
+|         105 |  Pooja     | Singh     | pooja.singh@specialforce.com  | 2021-06-10 | 40000.00 |             4 |
+|         108 | Shreya     | Mehta     | Shreya.mehta@specialforce.com | 2022-04-19 | 30000.00 |             5 |
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+10 rows in set (0.00 sec)
+
+
+
+mysql> SELECT * FROM EMPLOYEES ORDER BY DEPARTMENT_ID ASC, SALARY DESC;
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+| employee_id | first_name | last_name | email                         | hire_date  | salary   | department_id |
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+|         109 | Rajesh     | Gupta     | rajesh.gupta@specialforce.com | 2020-08-11 | 90000.00 |             1 |
+|         103 | Jyoti      | Verma     | jyoti.verma@specialforce.com  | 2020-11-02 | 60000.00 |             1 |
+|         101 | Ravi       | Sharma    | ravi.sharma@specialforce.com  | 2017-05-15 | 55000.00 |             1 |
+|         107 | Jatin      | Reddy     | jatin.reddy@specialforce.com  | 2021-12-12 | 85000.00 |             2 |
+|         110 | Kavita     | Nair      | Kavita.nair@specialforce.com  | 2021-02-07 | 50000.00 |             2 |
+|         102 | Neha       | Kapoor    | neha.kapoor@specialforce.com  | 2019-03-23 | 48000.00 |             2 |
+|         106 | Sanjay     | Iyer      | Sanjay.iyer@specialforce.com  | 2018-01-22 | 75000.00 |             3 |
+|         104 | Anil       | Patil     | anil.patil@specialforce.com   | 2018-09-18 | 70000.00 |             3 |
+|         105 |  Pooja     | Singh     | pooja.singh@specialforce.com  | 2021-06-10 | 40000.00 |             4 |
+|         108 | Shreya     | Mehta     | Shreya.mehta@specialforce.com | 2022-04-19 | 30000.00 |             5 |
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+10 rows in set (0.00 sec)
+
+
+
+mysql> SELECT * FROM EMPLOYEES WHERE SALARY BETWEEN 30000 AND 60000;
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+| employee_id | first_name | last_name | email                         | hire_date  | salary   | department_id |
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+|         101 | Ravi       | Sharma    | ravi.sharma@specialforce.com  | 2017-05-15 | 55000.00 |             1 |
+|         102 | Neha       | Kapoor    | neha.kapoor@specialforce.com  | 2019-03-23 | 48000.00 |             2 |
+|         103 | Jyoti      | Verma     | jyoti.verma@specialforce.com  | 2020-11-02 | 60000.00 |             1 |
+|         105 |  Pooja     | Singh     | pooja.singh@specialforce.com  | 2021-06-10 | 40000.00 |             4 |
+|         108 | Shreya     | Mehta     | Shreya.mehta@specialforce.com | 2022-04-19 | 30000.00 |             5 |
+|         110 | Kavita     | Nair      | Kavita.nair@specialforce.com  | 2021-02-07 | 50000.00 |             2 |
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+6 rows in set (0.01 sec)
+
+
+
+mysql> SELECT * FROM EMPLOYEES WHERE DEPARTMENT_ID IN(1, 2, 3);
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+| employee_id | first_name | last_name | email                         | hire_date  | salary   | department_id |
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+|         101 | Ravi       | Sharma    | ravi.sharma@specialforce.com  | 2017-05-15 | 55000.00 |             1 |
+|         102 | Neha       | Kapoor    | neha.kapoor@specialforce.com  | 2019-03-23 | 48000.00 |             2 |
+|         103 | Jyoti      | Verma     | jyoti.verma@specialforce.com  | 2020-11-02 | 60000.00 |             1 |
+|         104 | Anil       | Patil     | anil.patil@specialforce.com   | 2018-09-18 | 70000.00 |             3 |
+|         106 | Sanjay     | Iyer      | Sanjay.iyer@specialforce.com  | 2018-01-22 | 75000.00 |             3 |
+|         107 | Jatin      | Reddy     | jatin.reddy@specialforce.com  | 2021-12-12 | 85000.00 |             2 |
+|         109 | Rajesh     | Gupta     | rajesh.gupta@specialforce.com | 2020-08-11 | 90000.00 |             1 |
+|         110 | Kavita     | Nair      | Kavita.nair@specialforce.com  | 2021-02-07 | 50000.00 |             2 |
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+8 rows in set (0.00 sec)
+
+
+
+mysql> SELECT *
+    -> FROM Employees
+    -> WHERE hire_date BETWEEN '2020-01-01' AND '2021-12-31';
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+| employee_id | first_name | last_name | email                         | hire_date  | salary   | department_id |
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+|         103 | Jyoti      | Verma     | jyoti.verma@specialforce.com  | 2020-11-02 | 60000.00 |             1 |
+|         105 |  Pooja     | Singh     | pooja.singh@specialforce.com  | 2021-06-10 | 40000.00 |             4 |
+|         107 | Jatin      | Reddy     | jatin.reddy@specialforce.com  | 2021-12-12 | 85000.00 |             2 |
+|         109 | Rajesh     | Gupta     | rajesh.gupta@specialforce.com | 2020-08-11 | 90000.00 |             1 |
+|         110 | Kavita     | Nair      | Kavita.nair@specialforce.com  | 2021-02-07 | 50000.00 |             2 |
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+5 rows in set (0.00 sec)
+
+
+mysql> SELECT * FROM EMPLOYEES WHERE SALARY IS NULL;
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEES WHERE SALARY IS NOT NULL;
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+| employee_id | first_name | last_name | email                         | hire_date  | salary   | department_id |
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+|         101 | Ravi       | Sharma    | ravi.sharma@specialforce.com  | 2017-05-15 | 55000.00 |             1 |
+|         102 | Neha       | Kapoor    | neha.kapoor@specialforce.com  | 2019-03-23 | 48000.00 |             2 |
+|         103 | Jyoti      | Verma     | jyoti.verma@specialforce.com  | 2020-11-02 | 60000.00 |             1 |
+|         104 | Anil       | Patil     | anil.patil@specialforce.com   | 2018-09-18 | 70000.00 |             3 |
+|         105 |  Pooja     | Singh     | pooja.singh@specialforce.com  | 2021-06-10 | 40000.00 |             4 |
+|         106 | Sanjay     | Iyer      | Sanjay.iyer@specialforce.com  | 2018-01-22 | 75000.00 |             3 |
+|         107 | Jatin      | Reddy     | jatin.reddy@specialforce.com  | 2021-12-12 | 85000.00 |             2 |
+|         108 | Shreya     | Mehta     | Shreya.mehta@specialforce.com | 2022-04-19 | 30000.00 |             5 |
+|         109 | Rajesh     | Gupta     | rajesh.gupta@specialforce.com | 2020-08-11 | 90000.00 |             1 |
+|         110 | Kavita     | Nair      | Kavita.nair@specialforce.com  | 2021-02-07 | 50000.00 |             2 |
++-------------+------------+-----------+-------------------------------+------------+----------+---------------+
+10 rows in set (0.00 sec)
+
+
+
+
+mysql> SELECT DEPARTMENT_ID, SUM(SALARY) FROM EMPLOYEES GROUP BY DEPARTMENT_ID HAVING SUM(SALARY) > 100000;
++---------------+-------------+
+| DEPARTMENT_ID | SUM(SALARY) |
++---------------+-------------+
+|             1 |   205000.00 |
+|             2 |   183000.00 |
+|             3 |   145000.00 |
++---------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT FIRST_NAME, LAST_NAME FROM EMPLOYEES;
++------------+-----------+
+| FIRST_NAME | LAST_NAME |
++------------+-----------+
+| Ravi       | Sharma    |
+| Neha       | Kapoor    |
+| Jyoti      | Verma     |
+| Anil       | Patil     |
+|  Pooja     | Singh     |
+| Sanjay     | Iyer      |
+| Jatin      | Reddy     |
+| Shreya     | Mehta     |
+| Rajesh     | Gupta     |
+| Kavita     | Nair      |
++------------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> DESC DEPARTMENTS;
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| department_id   | int         | NO   | PRI | NULL    |       |
+| department_name | varchar(50) | YES  |     | NULL    |       |
+| LOCATION        | varchar(50) | YES  |     | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+3 rows in set (0.03 sec)
+
+
+mysql> SELECT location, COUNT(*) AS department_count
+    -> FROM Departments
+    -> GROUP BY location
+    -> HAVING COUNT(*) > 1;
+Empty set (0.00 sec)
